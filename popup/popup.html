@@ -10,7 +10,15 @@
     <div class="container">
       <img src="../icons/icon128.png" width="100px" height="100px" />
       <h4>E.Remover</h4>
-      <p>The selected item will be deleted at 10m intervals.</p>
+      <p>The selected item will be deleted at 10ms intervals.</p>
+      <div class="row">
+        <select id="modeSelect">
+          <option value="delete">Delete</option>
+          <option value="invisible">Invisible</option>
+          <option value="display_none">Display none</option>
+        </select>
+        <input title="on/off interval" type="checkbox" id="intervalCheckbox" />
+      </div>
       <button class="button" id="start">Start</button>
       <span>Developed by <a href="mailto:gaibullaeviz@gmail.com">ig</a></span>
     </div>

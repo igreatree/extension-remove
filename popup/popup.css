@@ -3,6 +3,12 @@ body {
   margin: 4px;
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   padding: 14px;
   padding-bottom: 8px;
