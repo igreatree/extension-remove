@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "E.Remover",
+    "version": "1.0.0",
+    "author": "Islam Gaibullaev",
+    "description": "A simple extension for removing elements (banners, ads, etc.) on websites of your choice.",
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "128": "icons/icon128.png"
+        }
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "icons": {
+        "128": "icons/icon128.png"
+    }
+}
