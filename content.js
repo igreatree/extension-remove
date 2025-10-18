@@ -12,6 +12,7 @@
     }
     ._invisible {
         visibility: hidden !important;
+        pointer-events: none !important;
     }
     ._display_none {
         display: none !important;
