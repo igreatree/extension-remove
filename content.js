@@ -6,17 +6,17 @@
   const style = document.createElement("style");
   style.textContent = `
     ._highlighted-element-delete {
-      outline: 2px solid red !important;
+      outline: 2px solid #23a6d5 !important;
       cursor: crosshair !important;
       background-color: #23a6d5;
     }
     ._highlighted-element-invisible {
-      outline: 2px solid red !important;
+      outline: 2px solid #23d5ab !important;
       cursor: crosshair !important;
       background-color: #23d5ab;
     }
     ._highlighted-element-display_none {
-      outline: 2px solid red !important;
+      outline: 2px solid #e73c7e !important;
       cursor: crosshair !important;
       background-color: #e73c7e;
     }
@@ -34,7 +34,7 @@
     selecting = !selecting;
     if (selecting) {
       document.body.style.cursor = "crosshair";
-      alert("Select mode enabled - point and click to delete.");
+      //   alert("Select mode enabled - point and click to delete.");
     } else {
       document.body.style.cursor = "default";
       if (highlightedElement)
