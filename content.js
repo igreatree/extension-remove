@@ -5,10 +5,20 @@
 
   const style = document.createElement("style");
   style.textContent = `
-    ._highlighted-element {
+    ._highlighted-element-delete {
       outline: 2px solid red !important;
       cursor: crosshair !important;
-      background-color: brown;
+      background-color: #23a6d5;
+    }
+    ._highlighted-element-invisible {
+      outline: 2px solid red !important;
+      cursor: crosshair !important;
+      background-color: #23d5ab;
+    }
+    ._highlighted-element-display_none {
+      outline: 2px solid red !important;
+      cursor: crosshair !important;
+      background-color: #e73c7e;
     }
     ._invisible {
         visibility: hidden !important;
@@ -33,18 +43,21 @@
     }
   });
 
-  document.addEventListener("mouseover", (e) => {
+  document.addEventListener("mouseover", async (e) => {
     if (!selecting) return;
-    if (highlightedElement)
-      highlightedElement.classList.remove("_highlighted-element");
+    const { mode } = await chrome.storage.local.get(["mode"]);
+    if (highlightedElement) {
+      highlightedElement.classList.remove("_highlighted-element-" + mode);
+    }
     highlightedElement = e.target;
-    highlightedElement.classList.add("_highlighted-element");
+    highlightedElement.classList.add("_highlighted-element-" + mode);
   });
 
-  document.addEventListener("mouseout", (e) => {
+  document.addEventListener("mouseout", async (e) => {
     if (!selecting) return;
-    if (e.target.classList.contains("_highlighted-element")) {
-      e.target.classList.remove("_highlighted-element");
+    const { mode } = await chrome.storage.local.get(["mode"]);
+    if (e.target.classList.contains("_highlighted-element-" + mode)) {
+      e.target.classList.remove("_highlighted-element-" + mode);
     }
   });
 
@@ -54,9 +67,9 @@
     e.stopPropagation();
     selecting = false;
     document.body.style.cursor = "default";
-    e.target.classList.remove("_highlighted-element");
     const { interval } = await chrome.storage.local.get(["interval"]);
     const { mode } = await chrome.storage.local.get(["mode"]);
+    e.target.classList.remove("_highlighted-element-" + mode);
     console.log("CONFIG", {
       interval,
       mode,
