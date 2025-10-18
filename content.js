@@ -5,9 +5,9 @@
     const style = document.createElement("style");
     style.textContent = `
     ._highlighted-element-delete {
-      outline: 2px solid #23a6d5 !important;
+      outline: 2px solid #e73c7e !important;
       cursor: crosshair !important;
-      background-color: #23a6d5;
+      background-color: #e73c7e;
     }
     ._highlighted-element-invisible {
       outline: 2px solid #23d5ab !important;
@@ -15,9 +15,9 @@
       background-color: #23d5ab;
     }
     ._highlighted-element-display_none {
-      outline: 2px solid #e73c7e !important;
+      outline: 2px solid #7a00ff !important;
       cursor: crosshair !important;
-      background-color: #e73c7e;
+      background-color: #7a00ff;
     }
     ._invisible {
         visibility: hidden !important;
