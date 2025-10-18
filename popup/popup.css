@@ -96,12 +96,12 @@ span {
   border-radius: 10px;
 }
 
-.button:hover:after {
-  background: none;
+.button:active:after {
+  background: #222222bc;
 }
 
-.button:active:after {
-  background: #222;
+.active:after {
+  background: none;
 }
 
 @keyframes gradient {

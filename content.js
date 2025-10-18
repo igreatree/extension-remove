@@ -1,10 +1,9 @@
 (function () {
-  let selecting = false;
-  let highlightedElement = null;
-  let intervalId = null;
+    let highlightedElement = null;
+    let intervalId = null;
 
-  const style = document.createElement("style");
-  style.textContent = `
+    const style = document.createElement("style");
+    style.textContent = `
     ._highlighted-element-delete {
       outline: 2px solid #23a6d5 !important;
       cursor: crosshair !important;
@@ -28,85 +27,90 @@
         display: none !important;
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
 
-  document.addEventListener("activateElementPicker", () => {
-    selecting = !selecting;
-    if (selecting) {
-      document.body.style.cursor = "crosshair";
-      //   alert("Select mode enabled - point and click to delete.");
-    } else {
-      document.body.style.cursor = "default";
-      if (highlightedElement)
-        highlightedElement.classList.remove("_highlighted-element");
-      if (intervalId) clearInterval(intervalId);
-    }
-  });
-
-  document.addEventListener("mouseover", async (e) => {
-    if (!selecting) return;
-    const { mode } = await chrome.storage.local.get(["mode"]);
-    if (highlightedElement) {
-      highlightedElement.classList.remove("_highlighted-element-" + mode);
-    }
-    highlightedElement = e.target;
-    highlightedElement.classList.add("_highlighted-element-" + mode);
-  });
-
-  document.addEventListener("mouseout", async (e) => {
-    if (!selecting) return;
-    const { mode } = await chrome.storage.local.get(["mode"]);
-    if (e.target.classList.contains("_highlighted-element-" + mode)) {
-      e.target.classList.remove("_highlighted-element-" + mode);
-    }
-  });
-
-  document.addEventListener("click", async (e) => {
-    if (!selecting) return;
-    e.preventDefault();
-    e.stopPropagation();
-    selecting = false;
-    document.body.style.cursor = "default";
-    const { interval } = await chrome.storage.local.get(["interval"]);
-    const { mode } = await chrome.storage.local.get(["mode"]);
-    e.target.classList.remove("_highlighted-element-" + mode);
-    console.log("CONFIG", {
-      interval,
-      mode,
+    document.addEventListener("activateElementPicker", async () => {
+        const { selecting } = await chrome.storage.local.get(["selecting"]);
+        if (selecting) {
+            document.body.style.cursor = "crosshair";
+        } else {
+            document.body.style.cursor = "default";
+            if (highlightedElement)
+                highlightedElement.classList.remove("_highlighted-element");
+            if (intervalId) clearInterval(intervalId);
+        }
     });
-    switch (mode) {
-      case "delete":
-        e.target.remove();
-        break;
-      case "invisible":
-        e.target.classList.add("_invisible");
-        break;
-      case "display_none":
-        e.target.classList.add("_display_none");
-        break;
-    }
-    if (interval && e.target.classList[0]) {
-      switch (mode) {
-        case "delete":
-          intervalId = setInterval(() => {
-            document.body.querySelector(`.${e.target.classList[0]}`)?.remove();
-          }, 10);
-          break;
-        case "invisible":
-          intervalId = setInterval(() => {
-            document.body
-              .querySelector(`.${e.target.classList[0]}`)
-              ?.classList?.add("_invisible");
-          }, 10);
-          break;
-        case "display_none":
-          intervalId = setInterval(() => {
-            document.body
-              .querySelector(`.${e.target.classList[0]}`)
-              ?.classList?.add("_display_none");
-          }, 10);
-          break;
-      }
-    }
-  });
+
+    document.addEventListener("mouseover", async (e) => {
+        const { selecting } = await chrome.storage.local.get(["selecting"]);
+        if (!selecting) return;
+        const { mode } = await chrome.storage.local.get(["mode"]);
+        if (highlightedElement) {
+            highlightedElement.classList.remove("_highlighted-element-" + mode);
+        }
+        highlightedElement = e.target;
+        highlightedElement.classList.add("_highlighted-element-" + mode);
+    });
+
+    document.addEventListener("mouseout", async (e) => {
+        const { selecting } = await chrome.storage.local.get(["selecting"]);
+        if (!selecting) return;
+        const { mode } = await chrome.storage.local.get(["mode"]);
+        if (e.target.classList.contains("_highlighted-element-" + mode)) {
+            e.target.classList.remove("_highlighted-element-" + mode);
+        }
+    });
+
+    document.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const { selecting } = await chrome.storage.local.get(["selecting"]);
+        if (!selecting) return;
+
+        await chrome.storage.local.set({ selecting: false });
+        const { interval } = await chrome.storage.local.get(["interval"]);
+        const { mode } = await chrome.storage.local.get(["mode"]);
+        document.body.style.cursor = "default";
+        e.target.classList.remove("_highlighted-element-" + mode);
+
+        console.log("CONFIG", {
+            interval,
+            mode,
+        });
+
+        switch (mode) {
+            case "delete":
+                e.target.remove();
+                break;
+            case "invisible":
+                e.target.classList.add("_invisible");
+                break;
+            case "display_none":
+                e.target.classList.add("_display_none");
+                break;
+        }
+        if (interval && e.target.classList[0]) {
+            switch (mode) {
+                case "delete":
+                    intervalId = setInterval(() => {
+                        document.body.querySelector(`.${e.target.classList[0]}`)?.remove();
+                    }, 10);
+                    break;
+                case "invisible":
+                    intervalId = setInterval(() => {
+                        document.body
+                            .querySelector(`.${e.target.classList[0]}`)
+                            ?.classList?.add("_invisible");
+                    }, 10);
+                    break;
+                case "display_none":
+                    intervalId = setInterval(() => {
+                        document.body
+                            .querySelector(`.${e.target.classList[0]}`)
+                            ?.classList?.add("_display_none");
+                    }, 10);
+                    break;
+            }
+        }
+    });
 })();
