@@ -64,7 +64,12 @@ span {
 
 .button:before {
   content: "";
-  background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000);
   position: absolute;
   top: -2px;
   left: -2px;
@@ -74,7 +79,7 @@ span {
   -webkit-filter: blur(5px);
   width: calc(100% + 4px);
   height: calc(100% + 4px);
-  animation: glowing-button 20s linear infinite;
+  animation: glowing 20s linear infinite;
   transition: opacity 0.3s ease-in-out;
   border-radius: 10px;
 }
@@ -91,13 +96,23 @@ span {
   border-radius: 10px;
 }
 
+.button:hover:after {
+  background: none;
+}
+
+.button:active:after {
+  background: #222;
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }

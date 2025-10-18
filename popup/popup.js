@@ -1,3 +1,4 @@
+const button = document.getElementById("start");
 const checkbox = document.getElementById("intervalCheckbox");
 const select = document.getElementById("modeSelect");
 
@@ -9,7 +10,7 @@ chrome.storage.local.get(["mode"], (result) => {
   select.value = result.mode || "delete";
 });
 
-document.getElementById("start").addEventListener("click", async () => {
+button.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
