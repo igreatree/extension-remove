@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>E.Remover - extension element remover</title>
     <link rel="stylesheet" href="popup.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <img src="../icons/icon128.png" width="100px" height="100px" />
-      <h4>E.Remover</h4>
-      <p>The selected item will be deleted at 10ms intervals.</p>
-      <div class="row">
-        <select id="modeSelect">
-          <option value="delete">Delete</option>
-          <option value="invisible">Invisible</option>
-          <option value="display_none">Display none</option>
-        </select>
-        <input title="on/off interval" type="checkbox" id="intervalCheckbox" />
-      </div>
-      <button class="button" id="start">Start</button>
-      <span>Developed by <a href="mailto:gaibullaeviz@gmail.com">ig</a></span>
+        <img src="../icons/icon128.png" width="100px" height="100px" />
+        <h4>E.Remover</h4>
+        <p>Select what you want to do with the element. Check the box for 10ms spaced repetition.</p>
+        <div class="row">
+            <select id="modeSelect">
+                <option value="delete">Delete</option>
+                <option value="invisible">Invisible</option>
+                <option value="display_none">Display none</option>
+            </select>
+            <input title="10ms interval" type="checkbox" id="intervalCheckbox" />
+        </div>
+        <button class="button" id="start">Start</button>
+        <span>Developed by <a href="mailto:gaibullaeviz@gmail.com">ig</a></span>
     </div>
     <script src="popup.js"></script>
-  </body>
+</body>
+
 </html>
